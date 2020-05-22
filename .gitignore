@@ -1,0 +1,6 @@
+target/
+project/target
+*.class
+.DS_Store
+venv
+.idea
