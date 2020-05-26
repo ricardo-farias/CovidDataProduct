@@ -1,13 +1,13 @@
 ﻿City,Population,Date Collected
-Chicago,1000,2-Mar-20
-New York,20000,4-Mar-20
-San Fransico,30000,NULL
-Dallas,100000,NULL
-St Louis,3000,3/4/2020. 
+Chicago ,   1000,   2-Mar-20
+ New York,   20000,    4-Mar-20
+San Francisco, 30000,NULL
+Dallas,100000, NULL
+St Louis ,3000,       3/4/2020.
 Seattle,502010,2-Apr-20
-New Haven,314001,10-Apr-20
-Boston,NA,5-Jan-20
-Salt Lake City,200000,10-May-20
-Houston,100000,25-Jun-19
-Denver,100000,10-Aug-19
-Lancaster,100000,12-Oct-19
+New Haven   ,314001,10-Apr-20
+Boston   , NA,   5-Jan-20
+ Salt Lake City,200000   ,10-May-20
+Houston    ,100000, 25-Jun-19
+Denver , 100000, 10-Aug-19
+   Lancaster,100000, 12-Oct-19
