@@ -19,10 +19,11 @@ object App {
         .options(
           Map(
             "header"-> "true",
-            "dateFormat"-> "dd-M-yy",
+            "dateFormat"-> "MM/dd/yyyy",
             "nullValue"-> "NULL",
             "ignoreTrailingWhiteSpace"->"true",
-            "ignoreLeadingWhiteSpace"->"true"
+            "ignoreLeadingWhiteSpace"->"true",
+            "mode"->"DROPMALFORMED"
           ))
         .schema(schema)
         .load("resource/TestData.csv")
