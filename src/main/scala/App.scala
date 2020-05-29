@@ -12,7 +12,8 @@ object App {
     val schema = StructType(List(
       StructField("City",StringType, false),
       StructField("Population", IntegerType, false),
-      StructField("Date Collected", DateType, true)
+      StructField("Date Collected", DateType, true),
+      StructField("_corrupt_record", StringType, true)
     ))
 
     val df = sql.read.format("csv")
@@ -22,13 +23,16 @@ object App {
             "dateFormat"-> "MM/dd/yyyy",
             "nullValue"-> "NULL",
             "ignoreTrailingWhiteSpace"->"true",
-            "ignoreLeadingWhiteSpace"->"true",
-            "mode"->"DROPMALFORMED"
+            "ignoreLeadingWhiteSpace"->"true"
           ))
         .schema(schema)
         .load("resource/TestData.csv")
     df.printSchema()
-    df.show()
+
+
+    // Corrupted values can be found here
+    val badRows = df.filter(df.col("_corrupt_record").isNotNull)
+    badRows.collect().foreach(row => println(row))
 
 
 
