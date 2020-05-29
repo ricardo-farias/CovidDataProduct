@@ -1,0 +1,25 @@
+{
+  "type" : "struct",
+  "fields" : [ {
+    "name" : "ADD_TYPE",
+    "type" : "string",
+    "nullable" : true,
+    "metadata" : {
+      "name" : "ADD_TYPE"
+    }
+  }, {
+    "name" : "CHANNEL",
+    "type" : "string",
+    "nullable" : true,
+    "metadata" : {
+      "name" : "CHANNEL"
+    }
+  }, {
+    "name" : "DATE_LOADED",
+    "type" : "date",
+    "nullable" : false,
+    "metadata" : {
+      "name" : "DATE_LOADED"
+    }
+  } ]
+}
