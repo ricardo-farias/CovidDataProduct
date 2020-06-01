@@ -1,25 +1,34 @@
 {
   "type" : "struct",
   "fields" : [ {
-    "name" : "ADD_TYPE",
+    "name" : "City",
     "type" : "string",
-    "nullable" : true,
-    "metadata" : {
-      "name" : "ADD_TYPE"
-    }
-  }, {
-    "name" : "CHANNEL",
-    "type" : "string",
-    "nullable" : true,
-    "metadata" : {
-      "name" : "CHANNEL"
-    }
-  }, {
-    "name" : "DATE_LOADED",
-    "type" : "date",
     "nullable" : false,
     "metadata" : {
-      "name" : "DATE_LOADED"
+      "name" : "City"
     }
+  }, {
+    "name" : "Population",
+    "type" : "integer",
+    "nullable" : false,
+    "metadata" : {
+      "name" : "Population"
+    }
+  },
+    {
+      "name": "DateCollected",
+      "type": "date",
+      "nullable": true,
+      "metadata": {
+        "name": "Date Collected"
+      }
+    },
+    {
+      "name" : "Corrupted",
+      "type" : "string",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "Corrupted"
+      }
   } ]
 }

@@ -8,7 +8,7 @@ import scala.util.Try
 
 object App {
 
-  def goodAndBad(schema: StructType, filename: String)(implicit sparkSession: SparkSession) : (DataFrame, DataFrame) = {
+  def readCsv(schema: StructType, filename: String)(implicit sparkSession: SparkSession) : (DataFrame, DataFrame) = {
     val df = sparkSession.read.format("csv")
       .options(
         Map(
@@ -17,13 +17,26 @@ object App {
           "nullValue"-> "NULL",
           "ignoreTrailingWhiteSpace"->"true",
           "ignoreLeadingWhiteSpace"->"true",
-          "columnNameOfCorruptRecord"->"corrupted"
+          "columnNameOfCorruptRecord"->"Corrupted"
         ))
       .schema(schema)
       .load(s"resource/${filename}.csv")
 
-    val badDF = df.filter(df.col("corrupted").isNotNull).toDF
-    val goodDF = df.filter(df.col("corrupted").isNull).toDF
+    val badDF = df.filter(df.col("Corrupted").isNotNull).toDF
+    val goodDF = df.filter(df.col("Corrupted").isNull).toDF
+    (goodDF, badDF)
+  }
+
+  def readJson(schema: StructType, filename: String)(implicit sparkSession: SparkSession): (DataFrame, DataFrame) = {
+    val df = sparkSession.read.options(
+      Map("dateFormat"->"MM/dd/yy",
+        "columnNameOfCorruptRecord"->"Corrupted",
+        "nullValues"->"NULL",
+        "multiline"->"true"))
+      .schema(schema)
+      .json(f"resource/${filename}.json")
+    val badDF = df.filter(df.col("Corrupted").isNotNull).toDF
+    val goodDF = df.filter(df.col("Corrupted").isNull).toDF
     (goodDF, badDF)
   }
 
@@ -45,9 +58,13 @@ object App {
 
     val schema : StructType = readSchemaFromJson()
 
-    val result = goodAndBad(schema, "TestData")(sql)
-    result._1.show
-    result._2.show
+    val csvResult = readCsv(schema, "TestData")(sql)
+    csvResult._1.show
+    csvResult._2.show
+
+    val jsonResult = readJson(schema, "TestData")(sql)
+    jsonResult._1.show()
+    jsonResult._2.foreach(row => println(row.get(3)))
 
   }
 
