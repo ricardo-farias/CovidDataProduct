@@ -51,9 +51,9 @@ object App {
   }
 
   def main(args : Array[String]): Unit ={
-    val config = new SparkConf().setMaster("local").setAppName("Practice")
+    val config = new SparkConf().setMaster(Constants.getProperty("master")).setAppName(Constants.getProperty("appName"))
     val sc = new SparkContext(config)
-    val sql = SparkSession.builder().appName("Practice").master("local").getOrCreate()
+    val sql = SparkSession.builder().appName(Constants.getProperty("appName")).master(Constants.getProperty("master")).getOrCreate()
 
     val schema : StructType = readSchemaFromJson()
 
