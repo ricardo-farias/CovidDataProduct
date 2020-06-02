@@ -1,62 +1,14 @@
 [
-  {
-  "City": "Denver",
-  "Population": "NULL",
-  "DateCollected": "10/02/20"
-  },
-  {
-  "City": "Chicago",
-  "Population": 40021,
-  "DateCollected": "03/20/20"
-  },
-  {
-    "City":  "San Fransisco",
-    "Population": 203104,
-    "DateCollected": "04/10/20"
-  },
-  {
-    "City": "St. Louis",
-    "Population": 302000,
-    "DateCollected": "10/30/20"
-  },
-  {
-    "City": "Dallas",
-    "Population": 2030001,
-    "DateCollected": "11/02/20"
-  },
-  {
-    "City":  "Las Vegas",
-    "Population": 203104,
-    "DateCollected": "04/10/20"
-  },
-  {
-    "City": "Los Angeles",
-    "Population": 302000,
-    "DateCollected": "10/30/20"
-  },
-  {
-    "City": "New York",
-    "Population": 2030001,
-    "DateCollected": "11/02/20"
-  },
-  {
-    "City": "Atlanta",
-    "Population": 2030001,
-    "DateCollected": "11/02/20"
-  },
-  {
-    "City":  "Houston",
-    "Population": 203104,
-    "DateCollected": "04/10/20"
-  },
-  {
-    "City": "Springfield",
-    "Population": 302000,
-    "DateCollected": "10/30/20"
-  },
-  {
-    "City": "Tampa",
-    "Population": 2030001,
-    "DateCollected": "11/02/20"
-  }
+  {"City": "Denver", "Population": "NULL", "DateCollected": "10/02/20"},
+  {"City": "Chicago", "Population": 40021, "DateCollected": "03/20/20"},
+  {"City":  "San Fransisco", "Population": 203104, "DateCollected": "04/10/20"},
+  {"City": "St. Louis", "Population": 302000, "DateCollected": "10/30/20"},
+  {"City": "Dallas", "Population": 2030001, "DateCollected": "11/02/20"},
+  {"City":  "Las Vegas", "Population": 203104, "DateCollected": "04/10/20"},
+  {"City": "Los Angeles", "Population": 302000, "DateCollected": "10/30/20"},
+  {"City": "New York", "Population": 2030001, "DateCollected": "11/02/20"},
+  {"City": "Atlanta", "Population": 2030001, "DateCollected": "11/02/20"},
+  {"City":  "Houston", "Population": 203104, "DateCollected": "04/10/20"},
+  {"City": "Springfield", "Population": 302000, "DateCollected": "10/30/20"},
+  {"City": "Tampa", "Population": 2030001, "DateCollected": "11/02/20"}
 ]

@@ -31,8 +31,7 @@ object App {
     val df = sparkSession.read.options(
       Map("dateFormat"->"MM/dd/yy",
         "columnNameOfCorruptRecord"->"Corrupted",
-        "nullValues"->"NULL",
-        "multiline"->"true"))
+        "nullValues"->"NULL"))
       .schema(schema)
       .json(f"resource/${filename}.json")
     val badDF = df.filter(df.col("Corrupted").isNotNull).toDF
