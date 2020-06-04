@@ -4,3 +4,6 @@ project/target
 .DS_Store
 venv
 .idea
+.terraform
+terraform.tfstate
+terraform.tfstate.backup
