@@ -7,3 +7,4 @@ venv
 .terraform
 terraform.tfstate
 terraform.tfstate.backup
+application.properties
