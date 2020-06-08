@@ -7,4 +7,5 @@ venv
 .terraform
 terraform.tfstate
 terraform.tfstate.backup
-application.properties
+EMR-key-pair.pem
+target.zip
