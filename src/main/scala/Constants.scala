@@ -1,12 +1,14 @@
 import java.io.FileInputStream
 import java.util.Properties
 
-object Constants {
-  private val prop = new Properties()
-  private val load = prop.load(new FileInputStream("application.properties"))
+import com.typesafe.config.ConfigFactory
 
-  def getProperty(name : String) : String = {
-    prop.getProperty(name)
-  }
+object Constants {
+  private val prop = ConfigFactory.load()
+
+  val env = prop.getString("environment")
+  val master = prop.getString(s"${env}.master")
+  val appName = prop.getString(s"${env}.appName")
+  val directory = prop.getString(s"${env}.directory")
 
 }
