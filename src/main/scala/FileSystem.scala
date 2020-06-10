@@ -98,7 +98,7 @@ object S3FileSystem extends FileSystem {
           "columnNameOfCorruptRecord"->"Corrupted"
         ))
       .schema(schema)
-      .load(s"s3a://${Constants.accessKey}:${Constants.secretKey}@${file.getBucketName}/${file.getKey}")
+      .load(s"s3a://${file.getBucketName}/${file.getKey}")
     val badDF = df.filter(df.col("Corrupted").isNotNull).toDF
     val goodDF = df.filter(df.col("Corrupted").isNull).toDF
     (goodDF, badDF)
@@ -122,7 +122,7 @@ object S3FileSystem extends FileSystem {
     val content = file.getObjectContent
     println(content)
     println(file.getKey)
-    val source = sparkContext.textFile(f"s3a://${Constants.accessKey}:${Constants.secretKey}@${file.getBucketName}/${file.getKey}").collect()
+    val source = sparkContext.textFile(f"s3a://${file.getBucketName}/${file.getKey}").collect()
 
     val data = source.toList.mkString("\n")
     val schema  = Try(DataType.fromJson(data)).getOrElse(LegacyTypeStringParser.parse(data)) match {

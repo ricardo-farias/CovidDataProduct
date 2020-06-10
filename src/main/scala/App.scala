@@ -8,8 +8,6 @@ object App {
     val config = new SparkConf().setMaster(Constants.master).setAppName(Constants.appName).set("spark.sql.shuffle.partitions", "5")
     implicit val sparkSession = SparkSession.builder().config(config).getOrCreate()
 
-    sparkSession.sparkContext.hadoopConfiguration.set("fs.s3a.awsAccessKeyId", Constants.accessKey)
-    sparkSession.sparkContext.hadoopConfiguration.set("fs.s3a.awsSecretAccessKey", Constants.secretKey)
     sparkSession.sparkContext.hadoopConfiguration.set("fs.s3a.endpoint", "s3.amazonaws.com")
 
     val fileStorage : FileSystem = if (Constants.env == "dev") LocalFileSystem else S3FileSystem

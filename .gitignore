@@ -9,4 +9,3 @@ terraform.tfstate
 terraform.tfstate.backup
 EMR-key-pair.pem
 target.zip
-resources/application.properties
