@@ -1,0 +1,92 @@
+{
+  "type" : "struct",
+  "fields" : [
+    {
+      "name" : "SNo",
+      "type" : "integer",
+      "nullable" : false,
+      "metadata" : {
+        "name" : "SNo",
+      }
+    }, {
+      "name" : "Date",
+      "type" : "date",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "Date"
+      }
+    },
+    {
+      "name" : "Country",
+      "type" : "string",
+      "nullable" : true,
+      "metadata" : {
+        "name": "Country"
+      }
+    },
+    {
+      "name" : "RegionCode",
+      "type" : "integer",
+      "nullable": true,
+      "metadata" : {
+        "name" : "RegionCode"
+      }
+    },
+    {
+      "name" : "RegionName",
+      "type" : "string",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "RegionName"
+      }
+    },
+    {
+      "name" : "ProvinceCode",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "ProvinceCode"
+      }
+    },
+    {
+      "name" : "ProvinceName",
+      "type" : "string",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "ProvinceName"
+      }
+    },
+    {
+      "name" : "ProvinceAbbreviation",
+      "type" : "string",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "ProvinceAbbreviation"
+      }
+    },
+    {
+      "name" : "Latitude",
+      "type" : "double",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "Latitude"
+      }
+    },
+    {
+      "name" : "Longitude",
+      "type" : "double",
+      "nullable" : true,
+      "metadata": {
+        "name" : "Longitude"
+      }
+    },
+    {
+      "name" : "TotalPositiveCases",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "TotalPositiveCases"
+      }
+    }
+  ]
+}

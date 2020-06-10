@@ -1,27 +1,34 @@
 import org.apache.spark._
 import org.apache.spark.sql._
-import org.apache.spark.sql.types.{StructType}
+import org.apache.spark.sql.types.StructType
 
 object App {
 
   def main(args : Array[String]): Unit ={
-    val config = new SparkConf().setMaster(Constants.master).setAppName(Constants.appName)
-    val sc = new SparkContext(config)
-    val sql = SparkSession.builder().appName(Constants.appName).master(Constants.master).getOrCreate()
+    val config = new SparkConf().setMaster(Constants.master).setAppName(Constants.appName).set("spark.sql.shuffle.partitions", "5")
+    implicit val sparkSession = SparkSession.builder().config(config).getOrCreate()
 
-    if (Constants.env == "dev"){
-      val schema : StructType = LocalFileSystem.readSchemaFromJson("TestDataSchema")
+    sparkSession.sparkContext.hadoopConfiguration.set("fs.s3a.awsAccessKeyId", Constants.accessKey)
+    sparkSession.sparkContext.hadoopConfiguration.set("fs.s3a.awsSecretAccessKey", Constants.secretKey)
+    sparkSession.sparkContext.hadoopConfiguration.set("fs.s3a.endpoint", "s3.amazonaws.com")
 
-      val csvResult = LocalFileSystem.readCsv(schema, "TestData")(sql)
-      csvResult._1.show
-      csvResult._2.show
+    val fileStorage : FileSystem = if (Constants.env == "dev") LocalFileSystem else S3FileSystem
 
-      val jsonResult = LocalFileSystem.readJson(schema, "TestData")(sql)
-      jsonResult._1.show()
-      jsonResult._2.foreach(row => println(row.get(3)))
-    }else{
-      S3FileSystem.listObjects()
-    }
+    fileStorage.listObjects()
+    val schema : StructType = fileStorage.readSchemaFromJson("TestDataSchema.json")(sparkSession.sparkContext)
+
+    println(schema)
+    val csvResult = fileStorage.readCsv(schema, "TestData.csv")(sparkSession)
+    csvResult._1.show
+    csvResult._2.show
+//
+//    val jsonResult = fileStorage.readJson(schema, "TestData.json")(sparkSession)
+//    jsonResult._1.show()
+//    jsonResult._2.foreach(row => println(row.get(3)))
+//    val italyProvinceSchema = fileStorage.readSchemaFromJson("covid-italy/covid19-italy-province-schema")(sparkContext)
+//    val covid = fileStorage.readCsv(italyProvinceSchema, "covid-italy/covid19_italy_province.csv")(sparkSession)
+//    covid._1.show()
+//    covid._2.foreach(row => println(row.get(3)))
 
 
   }
