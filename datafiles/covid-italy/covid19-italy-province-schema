@@ -6,11 +6,12 @@
       "type" : "integer",
       "nullable" : false,
       "metadata" : {
-        "name" : "SNo",
+        "name" : "SNo"
       }
-    }, {
+    },
+    {
       "name" : "Date",
-      "type" : "date",
+      "type" : "timestamp",
       "nullable" : true,
       "metadata" : {
         "name" : "Date"
@@ -86,6 +87,14 @@
       "nullable" : true,
       "metadata" : {
         "name" : "TotalPositiveCases"
+      }
+    },
+    {
+      "name": "Corrupted",
+      "type": "string",
+      "nullable": true,
+      "metadata": {
+        "name": "Corrupted"
       }
     }
   ]

@@ -92,6 +92,7 @@ object S3FileSystem extends FileSystem {
         Map(
           "header"-> "true",
           "dateFormat"-> "MM/dd/yyyy",
+          "timestampFormat"->"MM/dd/yyyy hh:mm:ss a",
           "nullValue"-> "NULL",
           "ignoreTrailingWhiteSpace"->"true",
           "ignoreLeadingWhiteSpace"->"true",
@@ -108,6 +109,7 @@ object S3FileSystem extends FileSystem {
     val file : S3Object = getObject(filename)
     val df = sparkSession.read.options(
       Map("dateFormat"->"MM/dd/yy",
+        "timestampFormat"->"MM/dd/yyyy hh:mm:ss a",
         "columnNameOfCorruptRecord"->"Corrupted",
         "nullValues"->"NULL"))
       .schema(schema)
