@@ -31,15 +31,20 @@ object App {
     val csvResult = fileStorage.readCsv(schema, "TestData.csv")(sparkSession)
     csvResult._1.show
     csvResult._2.show
+    fileStorage.write("TestDataFromCsv", csvResult._1)
 
     val jsonResult = fileStorage.readJson(schema, "TestData.json")(sparkSession)
     jsonResult._1.show()
     jsonResult._2.foreach(row => println(row.get(3)))
+    fileStorage.write("TestDataFromJson", jsonResult._1)
 
     val italyProvinceSchema = fileStorage.readSchemaFromJson("covid-italy/covid19-italy-province-schema")(sparkSession.sparkContext)
     val covid = fileStorage.readCsv(italyProvinceSchema, "covid-italy/covid19_italy_province.csv")(sparkSession)
     covid._1.show()
     covid._2.foreach(row => println(row.get(3)))
+    fileStorage.write("covid-italy/covid19_italy_province", covid._1)
+
+
 
 
   }

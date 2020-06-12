@@ -17,7 +17,7 @@ abstract class FileSystem {
   def readJson(schema: StructType, filename: String)(implicit sparkSession: SparkSession) : (DataFrame, DataFrame)
   def readCsv(schema: StructType, filename: String)(implicit sparkSession: SparkSession) : (DataFrame, DataFrame)
   def readSchemaFromJson(filename: String)(implicit sparkContext: SparkContext) : StructType
-  def write(path: String, data: DataFrame) : Unit
+  def write(filename: String, data: DataFrame) : Unit
   def listObjects() : Unit
 }
 
@@ -69,7 +69,9 @@ object LocalFileSystem extends FileSystem {
 
   def setRootDirectory(directory: String) : Unit = ROOT_DIRECTORY = directory
 
-  override def write(path: String, data : DataFrame) : Unit = ???
+  override def write(filename: String, data : DataFrame) : Unit = {
+    data.write.parquet(f"${ROOT_DIRECTORY}/${filename}.parquet")
+  }
 
   override def listObjects() : Unit = {
     val dir = new File(ROOT_DIRECTORY)
@@ -134,7 +136,9 @@ object S3FileSystem extends FileSystem {
     schema
   }
 
-  override def write(path: String, data: DataFrame) : Unit = ???
+  override def write(filename: String, data: DataFrame) : Unit = {
+    data.write.parquet(f"s3a://${bucket}/${filename}.parquet")
+  }
 
   private def getObject(filename: String) : S3Object = {
     val result = s3Client.getObject(bucket, filename)
