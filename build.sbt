@@ -17,9 +17,11 @@ lazy val root = (project in file(".")).
 libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % "2.4.5" % Provided,
   "org.apache.spark" %% "spark-sql" % "2.4.5" % Provided,
+  "org.apache.spark" %% "spark-hive" % "2.8.5" % Provided,
   "com.amazonaws" % "aws-java-sdk-s3" % "1.11.515",
   "com.typesafe" % "config" % "1.3.0",
-  "org.apache.hadoop" % "hadoop-aws" % "2.8.5" % Provided)
+  "org.apache.hadoop" % "hadoop-aws" % "2.8.5" % Provided
+)
 
 
 assemblyMergeStrategy in assembly := {

@@ -8,7 +8,7 @@ import com.amazonaws.services.s3.model.S3Object
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.catalyst.parser.LegacyTypeStringParser
 import org.apache.spark.sql.types.{DataType, StructType}
-import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.apache.spark.sql.{DataFrame, SaveMode, SparkSession}
 
 import scala.io.{BufferedSource, Source}
 import scala.util.Try
@@ -17,7 +17,7 @@ abstract class FileSystem {
   def readJson(schema: StructType, filename: String)(implicit sparkSession: SparkSession) : (DataFrame, DataFrame)
   def readCsv(schema: StructType, filename: String)(implicit sparkSession: SparkSession) : (DataFrame, DataFrame)
   def readSchemaFromJson(filename: String)(implicit sparkContext: SparkContext) : StructType
-  def write(filename: String, data: DataFrame) : Unit
+  def write(filename: String, data: DataFrame)(implicit sparkSession: SparkSession) : Unit
   def listObjects() : Unit
 }
 
@@ -69,8 +69,8 @@ object LocalFileSystem extends FileSystem {
 
   def setRootDirectory(directory: String) : Unit = ROOT_DIRECTORY = directory
 
-  override def write(filename: String, data : DataFrame) : Unit = {
-    data.write.parquet(f"${ROOT_DIRECTORY}/${filename}.parquet")
+  override def write(filename: String, data : DataFrame)(implicit sparkSession: SparkSession)  : Unit = {
+    data.write.mode(SaveMode.Overwrite).parquet(f"${ROOT_DIRECTORY}/${filename}.parquet")
   }
 
   override def listObjects() : Unit = {
@@ -136,8 +136,12 @@ object S3FileSystem extends FileSystem {
     schema
   }
 
-  override def write(filename: String, data: DataFrame) : Unit = {
-    data.write.parquet(f"s3a://${bucket}/${filename}.parquet")
+  override def write(filename: String, data: DataFrame)(sparkSession: SparkSession) : Unit = {
+    val name = if (filename.contains("/")) filename.split("/")(1) else filename
+    data.createOrReplaceTempView(name)
+    sparkSession.sql("drop table if exists my_table")
+    sparkSession.sql(s"create table ${name} as select * from ${name}")
+    data.write.mode("overwrite").parquet(f"s3a://${bucket}/${filename}.parquet")
   }
 
   private def getObject(filename: String) : S3Object = {
