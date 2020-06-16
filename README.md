@@ -1,40 +1,17 @@
 ### Background
-The purpose of this project is to become familiar
-with apache spark in scala, as well as other data
-science/engineering technologies.
+The purpose of this project is to create an example of a working data mesh in AWS.
 
-### Technological Infrastructure
+### Tech Stack
 
-- AWS EMR
-- Hadoop
-- Yarn
-- Scala
-- Apache Spark
-
-
-### Conceptual Understanding
-
-- What is a Data Lake:
-    - How are data lakes setup?
-    - What are their purposes?
-    - How do they differ from data mesh?
-    - What makes them desirable?
+- AWS EMR - Data ETL
+- AWS Glue - Data catalogue
+- AWS Athena - Data analytics
+- AWS S3 - Data storage
+- Terraform - AWS resource manager
+- Scala Spark - Development tools
+- CircleCi - Continuous deployment
 
 
-- What is a Data Mesh:
-    - How are data meshs setup?
-    - What are their purposes?
-    - How do they differ from data lake?
-    - What makes them desirable?
-    
-    
-- How to setup a project environment?
-    - What kind of infrastructure is needed?
+### Steps to Recreate
 
-### Data Lake
-
-    To be filled with content
-
-### Data Mesh
-   
-    To be filled with content
+Steps to be documented soon.......
