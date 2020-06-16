@@ -1,0 +1,149 @@
+{
+  "type": "struct",
+  "fields": [
+    {
+      "name" : "SNo",
+      "type" : "integer",
+      "nullable" : false,
+      "metadata" : {
+        "name" : "SNo"
+      }
+    },
+    {
+      "name" : "Date",
+      "type" : "timestamp",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "Date"
+      }
+    },
+    {
+      "name" : "Country",
+      "type" : "string",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "Country"
+      }
+    },
+    {
+      "name" : "RegionCode",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "RegionCode"
+      }
+    },
+    {
+      "name" : "RegionName",
+      "type" : "string",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "RegionName"
+      }
+    },
+    {
+      "name" : "Latitude",
+      "type" : "double",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "Latitude"
+      }
+    },
+    {
+      "name" : "Longitude",
+      "type" : "double",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "Longitude"
+      }
+    },
+    {
+      "name" : "HospitalizedPatients",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "HospitalizedPatients"
+      }
+    },
+    {
+      "name" : "IntensiveCarePatients",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "IntensiveCarePatients"
+      }
+    },
+    {
+      "name" : "TotalHospitalizedPatients",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "TotalHospitalizedPatients"
+      }
+    },
+    {
+      "name" : "HomeContainment",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "HomeContainment"
+      }
+    },
+    {
+      "name" : "CurrentPositiveCases",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "CurrentPositiveCases"
+      }
+    },
+    {
+      "name" : "NewPositiveCases",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "NewPositiveCases"
+      }
+    },
+    {
+      "name" : "Recovered",
+      "type"  : "integer",
+      "nullable" : true,
+      "metadata": {
+        "name" : "Recovered"
+      }
+    },
+    {
+      "name" : "Deaths",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "Deaths"
+      }
+    },
+    {
+      "name" : "TotalPositiveCases",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "TotalPositiveCases"
+      }
+    },
+    {
+      "name" : "TestsPerformed",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "TestsPerformed"
+      }
+    },
+    {
+      "name" : "Corrupted",
+      "type" : "string",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "Corrupted"
+      }
+    }
+  ]
+}

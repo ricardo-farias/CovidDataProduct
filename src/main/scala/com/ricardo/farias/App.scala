@@ -13,12 +13,10 @@ object App {
       SparkSession.builder().master(Constants.master).config(config).getOrCreate()
     }else {
       SparkSession.builder().master(Constants.master)
-        .config("spark.sql.catalogImplementation", "hive")
         .config("hive.metastore.connect.retries", 5)
         .config("hive.metastore.client.factory.class",
         "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory")
         .config("spark.sql.sources.partitionOverwriteMode", "dynamic")
-
         .enableHiveSupport().getOrCreate()
     }
 
@@ -34,7 +32,6 @@ object App {
       sparkSession.sparkContext.hadoopConfiguration.set("hive.metastore.connect.retries", "5")
       sparkSession.sparkContext.hadoopConfiguration.set("hive.metastore.client.factory.class",
         "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory")
-      sparkSession.catalog.setCurrentDatabase("default")
       S3FileSystem
     }
 

@@ -13,12 +13,13 @@ lazy val root = (project in file(".")).
     mainClass in Compile := Some("com.ricardo.farias.App")
   )
 
+val sparkVersion = "2.4.5"
 
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % "2.4.5" % Provided,
-  "org.apache.spark" %% "spark-sql" % "2.4.5" % Provided,
-  "org.apache.spark" %% "spark-hive" % "2.8.5" % Provided,
-  "com.amazonaws" % "aws-java-sdk-s3" % "1.11.515",
+  "org.apache.spark" %% "spark-core" % sparkVersion % Provided,
+  "org.apache.spark" %% "spark-sql" % sparkVersion % Provided,
+  "org.apache.spark" %% "spark-hive" % sparkVersion % Provided,
+  "com.amazonaws" % "aws-java-sdk-s3" % "1.11.759",
   "com.typesafe" % "config" % "1.3.0",
   "org.apache.hadoop" % "hadoop-aws" % "2.8.5" % Provided
 )

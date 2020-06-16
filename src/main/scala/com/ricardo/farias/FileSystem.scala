@@ -136,12 +136,10 @@ object S3FileSystem extends FileSystem {
     schema
   }
 
-  override def write(filename: String, data: DataFrame)(sparkSession: SparkSession) : Unit = {
+  override def write(filename: String, data: DataFrame)(implicit sparkSession: SparkSession) : Unit = {
     val name = if (filename.contains("/")) filename.split("/")(1) else filename
-    data.createOrReplaceTempView(name)
-    sparkSession.sql("drop table if exists my_table")
-    sparkSession.sql(s"create table ${name} as select * from ${name}")
-    data.write.mode("overwrite").parquet(f"s3a://${bucket}/${filename}.parquet")
+    data.write.mode(SaveMode.Overwrite).saveAsTable(name)
+    data.write.mode(SaveMode.Overwrite).parquet(f"s3a://${bucket}/${filename}.parquet")
   }
 
   private def getObject(filename: String) : S3Object = {
