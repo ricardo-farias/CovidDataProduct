@@ -139,12 +139,16 @@ object S3FileSystem extends FileSystem {
   override def write(filename: String, data: DataFrame)(implicit sparkSession: SparkSession) : Unit = {
     val name = if (filename.contains("/")) filename.split("/")(1) else filename
     data.createOrReplaceTempView(name)
-    sparkSession.sql(s"""CREATE TABLE default.${name}
-      USING PARQUET
-      OPTIONS ('compression'='snappy')
-      LOCATION 's3://${bucket}/${filename}'
-      SELECT * FROM ${name}""")
-    data.write.mode(SaveMode.Overwrite).parquet(f"s3a://${bucket}/${filename}.parquet")
+//    sparkSession.sql(s"""CREATE TABLE default.${name}
+//      USING PARQUET
+//      OPTIONS ('compression'='snappy')
+//      LOCATION 's3://${bucket}/${filename}'
+//      SELECT * FROM ${name}""")
+    //data.write.mode(SaveMode.Overwrite).parquet(f"s3a://${bucket}/${filename}.parquet")
+    data.write.format("parquet")
+      .mode(SaveMode.Overwrite)
+      .option("path", f"s3a://${bucket}/${filename}.parquet")
+      .saveAsTable(s"default.${name}")
   }
 
   private def getObject(filename: String) : S3Object = {
