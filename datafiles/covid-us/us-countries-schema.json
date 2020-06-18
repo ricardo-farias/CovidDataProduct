@@ -1,0 +1,93 @@
+{
+  "type": "struct",
+  "fields": [
+    {
+      "name": "date",
+      "type": "date",
+      "nullable": false,
+      "metadata": {
+        "name": "date"
+      }
+    },
+    {
+      "name" : "country",
+      "type" : "string",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "country"
+      }
+    },
+    {
+      "name" : "state",
+      "type" : "string",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "state"
+      }
+    },
+    {
+      "name" : "fips",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "fips"
+      }
+    },
+    {
+      "name" : "cases",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "cases"
+      }
+    },
+    {
+      "name" : "deaths",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "deaths"
+      }
+    },
+    {
+      "name" : "confirmed_cases",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "confirmed_cases"
+      }
+    },
+    {
+      "name" : "confirmed_deaths",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "confirmed_deaths"
+      }
+    },
+    {
+      "name" : "probable_cases",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "probable_cases"
+      }
+    },
+    {
+      "name" : "probable_deaths",
+      "type" : "integer",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "probable_deaths"
+      }
+    },
+    {
+      "name" : "Corrupted",
+      "type" : "string",
+      "nullable" : true,
+      "metadata" : {
+        "name" : "Corrupted"
+      }
+    }
+  ]
+}
