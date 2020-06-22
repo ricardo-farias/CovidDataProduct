@@ -10,4 +10,5 @@ object Constants {
   val appName: String = prop.getString(s"${env}.appName")
   val directory: String = prop.getString(s"${env}.directory")
   val bucket: String = prop.getString(s"${env}.bucketName")
+  val database: String = prop.getString(s"${env}.database")
 }

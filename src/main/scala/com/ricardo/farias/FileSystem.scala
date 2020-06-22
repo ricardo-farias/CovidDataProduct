@@ -148,7 +148,7 @@ object S3FileSystem extends FileSystem {
     data.write.format("parquet")
       .mode(SaveMode.Overwrite)
       .option("path", f"s3a://${bucket}/${filename}.parquet")
-      .saveAsTable(s"default.${name}")
+      .saveAsTable(s"${Constants.database}.${name}")
   }
 
   private def getObject(filename: String) : S3Object = {
