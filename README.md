@@ -38,7 +38,6 @@ The purpose of this project is to create an example of a working data mesh in AW
     ```
  5. In EMR, unzip and run the deployed app by running this command:
     ```shell script
-    unzip target.zip
-    spark-submit --class com.ricardo.farias.App target/scala-2.11/SparkPractice-assembly-0.1.jar
+    spark-submit --class com.ricardo.farias.App SparkPractice-assembly-0.1.jar
     ``` 
 If the spark application runs successfully, then aws athena, glue, and s3 will be populated with data.
