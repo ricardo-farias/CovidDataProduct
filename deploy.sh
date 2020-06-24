@@ -1,10 +1,8 @@
 #!/bin/bash
 
-if [ $# -gt 0 ]; then
-  location=$1
-  sbt assembly
-  scp -i EMR-key-pair.pem target/scala-2.11/SparkPractice-assembly-0.1.jar hadoop@"$location":~
-  else
-    echo "Error: no EMR public master dns found"
-    echo "example: ./deploy.sh ec2.example.com"
-fi
+echo "Building jar....."
+sbt assembly
+echo "Jar built successfully"
+echo "Sending jar to s3......."
+aws s3 cp target/scala-2.11/SparkPractice-assembly-0.1.jar s3://emr-configuration-scripts/
+echo "Jar sent to s3 successfully"
