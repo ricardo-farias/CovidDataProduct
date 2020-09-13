@@ -37,53 +37,62 @@ object App {
 
     fileStorage.listObjects()
 
-    val schema : StructType = fileStorage.readSchemaFromJson("TestDataSchema.json")(sparkSession.sparkContext)
+    val schema : StructType = fileStorage.readSchemaFromJson("raw", "TestDataSchema.json")(sparkSession.sparkContext)
     println(schema)
 
-    val csvResult = fileStorage.readCsv(schema, "TestData.csv")(sparkSession)
+    val csvResult = fileStorage.readCsv(schema, "raw","TestData.csv")(sparkSession)
     csvResult._1.show
     csvResult._2.show
-    fileStorage.write("TestDataFromCsv", csvResult._1)
+    fileStorage.write("canonical","TestDataFromCsv", csvResult._1)
 
-    val jsonResult = fileStorage.readJson(schema, "TestData.json")(sparkSession)
+    val jsonResult = fileStorage.readJson(schema,"raw", "TestData.json")(sparkSession)
     jsonResult._1.show()
     jsonResult._2.foreach(row => println(row.get(3)))
-    fileStorage.write("TestDataFromJson", jsonResult._1)
+    fileStorage.write("canonical","TestDataFromJson", jsonResult._1)
 
-    val italyProvinceSchema = fileStorage.readSchemaFromJson("covid-italy/covid19-italy-province-schema")(sparkSession.sparkContext)
-    val covidItalyProvince = fileStorage.readCsv(italyProvinceSchema, "covid-italy/covid19_italy_province.csv")(sparkSession)
-    covidItalyProvince._1.show()
-    covidItalyProvince._2.foreach(row => println(row.get(3)))
-    fileStorage.write("covid-italy/covid19_italy_province", covidItalyProvince._1)
+    val italyProvinceSchema = fileStorage.readSchemaFromJson("raw","covid-italy/covid19-italy-province-schema")(sparkSession.sparkContext)
+    val covidItalyProvinceResults = fileStorage.readCsv(italyProvinceSchema, "raw", "covid-italy/covid19_italy_province.csv")(sparkSession)
+    val covidItalyProvince = covidItalyProvinceResults._1
+    covidItalyProvince.show()
+    val corruptCovidItalyProvince = covidItalyProvinceResults._2
+    corruptCovidItalyProvince.show()
+    fileStorage.write("canonical","covid-italy/covid19_italy_province", covidItalyProvince)
+    fileStorage.write("error","covid-italy/covid19_italy_province_err", corruptCovidItalyProvince)
 
-    val italyRegionSchema = fileStorage.readSchemaFromJson("covid-italy/covid19-italy-region-schema.json")(sparkSession.sparkContext)
-    val covidItalyRegion = fileStorage.readCsv(italyRegionSchema, "covid-italy/covid19_italy_region.csv")(sparkSession)
-    covidItalyRegion._1.show()
-    covidItalyRegion._2.foreach(row => println(row.get(3)))
-    fileStorage.write("covid-italy/covid19_italy_region", covidItalyRegion._1)
+    val italyRegionSchema = fileStorage.readSchemaFromJson("raw","covid-italy/covid19-italy-region-schema.json")(sparkSession.sparkContext)
+    val covidItalyRegionResults = fileStorage.readCsv(italyRegionSchema,"raw", "covid-italy/covid19_italy_region.csv")(sparkSession)
+    val covidItalyRegion = covidItalyRegionResults._1
+    covidItalyRegion.show()
+    val corruptCovidItalyRegion = covidItalyRegionResults._2
+    corruptCovidItalyRegion.show()
+    fileStorage.write("canonical","covid-italy/covid19_italy_region", covidItalyRegion)
+    fileStorage.write("error","covid-italy/covid19_italy_region_err", corruptCovidItalyRegion)
 
-    val usSchema = fileStorage.readSchemaFromJson("covid-us/us-schema.json")(sparkSession.sparkContext)
-    val covidUs = fileStorage.readCsv(usSchema, "covid-us/us.csv")(sparkSession)
-    covidUs._1.show()
-    covidUs._2.foreach(row => println(row.get(3)))
-    fileStorage.write("covid-us/covid_us", covidUs._1)(sparkSession)
+    val usSchema = fileStorage.readSchemaFromJson("raw","covid-us/us-schema.json")(sparkSession.sparkContext)
+    val covidUsResults = fileStorage.readCsv(usSchema, "raw","covid-us/us.csv")(sparkSession)
+    val covidUs = covidUsResults._1
+    covidUs.show()
+    val corruptCovidUS = covidUsResults._2
+    corruptCovidUS.show()
+    fileStorage.write("canonical", "covid-us/covid_us", covidUs)(sparkSession)
+    fileStorage.write("error", "covid-us/covid_us_err", covidUs)(sparkSession)
 
-    val usCountriesSchema = fileStorage.readSchemaFromJson("covid-us/us-counties-schema.json")(sparkSession.sparkContext)
-    val covidUsCountries = fileStorage.readCsv(usCountriesSchema, "covid-us/us-counties.csv")(sparkSession)
-    covidUsCountries._1.show()
-    covidUsCountries._2.foreach(row => println(row.get(3)))
-    fileStorage.write("covid-us/covid_us_counties", covidUsCountries._1)(sparkSession)
+    val usCountriesSchema = fileStorage.readSchemaFromJson("raw","covid-us/us-counties-schema.json")(sparkSession.sparkContext)
+    val covidUsCountriesResults = fileStorage.readCsv(usCountriesSchema, "raw","covid-us/us-counties.csv")(sparkSession)
+    val covidUsCountries = covidUsCountriesResults._1
+    covidUsCountries.show()
+    val corruptCovidUsCountries = covidUsCountriesResults._2
+    corruptCovidUsCountries.show()
+    fileStorage.write("canonical","covid-us/covid_us_counties", covidUsCountries)(sparkSession)
+    fileStorage.write("error","covid-us/covid_us_counties_err", corruptCovidUsCountries)(sparkSession)
 
-    val usStatesSchema = fileStorage.readSchemaFromJson("covid-us/us-states-schema.json")(sparkSession.sparkContext)
-    val covidUsStates = fileStorage.readCsv(usStatesSchema, "covid-us/us-states.csv")(sparkSession)
-    covidUsStates._1.show()
-    covidUsStates._2.foreach(row => println(row.get(3)))
-    fileStorage.write("covid-us/covid_us_states", covidUsStates._1)(sparkSession)
-
-
-
-
-
+    val usStatesSchema = fileStorage.readSchemaFromJson("raw","covid-us/us-states-schema.json")(sparkSession.sparkContext)
+    val covidUsStatesResults = fileStorage.readCsv(usStatesSchema, "raw", "covid-us/us-states.csv")(sparkSession)
+    val covidUsStates = covidUsStatesResults._1
+    covidUsStates.show()
+    val corruptCovidUsStates = covidUsStatesResults._2
+    corruptCovidUsStates.show()
+    fileStorage.write("canonical","covid-us/covid_us_states", covidUsStates)(sparkSession)
+    fileStorage.write("error","covid-us/covid_us_states", corruptCovidUsStates)(sparkSession)
   }
-
 }
