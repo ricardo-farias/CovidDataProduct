@@ -2,9 +2,6 @@ package com.ricardo.farias
 
 import java.io.File
 
-import com.amazonaws.auth.profile.ProfileCredentialsProvider
-import com.amazonaws.services.s3.AmazonS3ClientBuilder
-import com.amazonaws.services.s3.model.S3Object
 import org.apache.spark.SparkContext
 import org.apache.spark.sql.catalyst.parser.LegacyTypeStringParser
 import org.apache.spark.sql.types.{DataType, StructType}
@@ -81,14 +78,9 @@ object LocalFileSystem extends FileSystem {
 }
 
 object S3FileSystem extends FileSystem {
-  private val cred = new ProfileCredentialsProvider("profile sparkapp")
-  private val s3Client = AmazonS3ClientBuilder.standard()
-    .withCredentials(cred).build()
   private val bucket = Constants.bucket
 
   override def readCsv(schema : StructType, filePath: String, filename: String)(implicit sparkSession: SparkSession) : (DataFrame, DataFrame) = {
-    val file : S3Object = getObject(filePath, filename)
-    println(s"s3a://${file.getBucketName}/${file.getKey}")
     val df = sparkSession.read.format("csv")
       .options(
         Map(
@@ -101,32 +93,27 @@ object S3FileSystem extends FileSystem {
           "columnNameOfCorruptRecord"->"Corrupted"
         ))
       .schema(schema)
-      .load(s"s3a://${file.getBucketName}/${file.getKey}")
+      .load(f"s3a://${bucket}/${filePath}/${filename}")
     val badDF = df.filter(df.col("Corrupted").isNotNull).toDF
     val goodDF = df.filter(df.col("Corrupted").isNull).toDF
     (goodDF, badDF)
   }
 
   override def readJson(schema: StructType, filePath: String, filename: String)(implicit sparkSession: SparkSession) : (DataFrame, DataFrame) = {
-    val file : S3Object = getObject(filePath, filename)
     val df = sparkSession.read.options(
       Map("dateFormat"->"MM/dd/yy",
         "timestampFormat"->"MM/dd/yyyy hh:mm:ss a",
         "columnNameOfCorruptRecord"->"Corrupted",
         "nullValues"->"NULL"))
       .schema(schema)
-      .json(f"s3a://${file.getBucketName}/${file.getKey}")
+      .json(f"s3a://${bucket}/${filePath}/${filename}")
     val badDF = df.filter(df.col("Corrupted").isNotNull).toDF
     val goodDF = df.filter(df.col("Corrupted").isNull).toDF
     (goodDF, badDF)
   }
 
   override def readSchemaFromJson(filePath: String, filename: String)(implicit sparkContext: SparkContext) : StructType = {
-    val file : S3Object = getObject(filePath, filename)
-    val content = file.getObjectContent
-    println(content)
-    println(file.getKey)
-    val source = sparkContext.textFile(f"s3a://${file.getBucketName}/${file.getKey}").collect()
+    val source = sparkContext.textFile(f"s3a://${bucket}/${filePath}/${filename}").collect()
 
     val data = source.toList.mkString("\n")
     val schema  = Try(DataType.fromJson(data)).getOrElse(LegacyTypeStringParser.parse(data)) match {
@@ -151,15 +138,8 @@ object S3FileSystem extends FileSystem {
       .saveAsTable(s"${Constants.database}.${name}")
   }
 
-  private def getObject(filePath: String, filename: String) : S3Object = {
-    val result = s3Client.getObject(bucket, f"${filePath}/${filename}")
-    result
-  }
-
   override def listObjects() : Unit = {
-    val result = s3Client.listObjectsV2(bucket)
-    val objects = result.getObjectSummaries.toArray
-    objects.foreach(println)
+    // TODO
   }
 
 }
