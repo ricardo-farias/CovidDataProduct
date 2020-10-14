@@ -54,14 +54,14 @@ object App {
     fileStorage.write("canonical", "us", "covid_us", covidUs)(sparkSession)
     fileStorage.write("error", "us", "covid_us_err", covidUs)(sparkSession)
 
-    val usCountriesSchema = fileStorage.readSchemaFromJson("raw", "us","us-counties-schema.json")(sparkSession.sparkContext)
-    val covidUsCountriesResults = fileStorage.readCsv(usCountriesSchema, "raw", "us","us-counties.csv")(sparkSession)
-    val covidUsCountries = covidUsCountriesResults._1
-    covidUsCountries.show()
-    val corruptCovidUsCountries = covidUsCountriesResults._2
-    corruptCovidUsCountries.show()
-    fileStorage.write("canonical", "us","covid_us_counties", covidUsCountries)(sparkSession)
-    fileStorage.write("error", "us","covid_us_counties_err", corruptCovidUsCountries)(sparkSession)
+    val usCountiesSchema = fileStorage.readSchemaFromJson("raw", "us","us-counties-schema.json")(sparkSession.sparkContext)
+    val covidUsCountiesResults = fileStorage.readCsv(usCountiesSchema, "raw", "us","us-counties.csv")(sparkSession)
+    val covidUsCounties = covidUsCountiesResults._1
+    covidUsCounties.show()
+    val corruptCovidUsCounties = covidUsCountiesResults._2
+    corruptCovidUsCounties.show()
+    fileStorage.write("canonical", "us","covid_us_counties", covidUsCounties)(sparkSession)
+    fileStorage.write("error", "us","covid_us_counties_err", corruptCovidUsCounties)(sparkSession)
 
     val usStatesSchema = fileStorage.readSchemaFromJson("raw", "us","us-states-schema.json")(sparkSession.sparkContext)
     val covidUsStatesResults = fileStorage.readCsv(usStatesSchema, "raw", "us", "us-states.csv")(sparkSession)
